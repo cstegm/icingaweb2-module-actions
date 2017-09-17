@@ -1,0 +1,65 @@
+<div class="controls">
+    <?= $tabs ?>
+    <?= $this->qlink(
+        $this->translate('Add New Action') ,
+        'actions/config/new',
+        null,
+        array(
+            'class'             => 'action-link',
+            'data-base-target'  => '_next',
+            'icon'              => 'plus',
+            'title'             => $this->translate('Add a new Action')
+        )
+    ) ?>
+    <br>
+    <?= $this->translate('Be careful:') ?>
+	<ul>
+		<li> <?= $this->translate('Actions are executed as User: '.$this->user) ?> </li>
+		<li> <?= $this->translate('Don\'t run interactive Scripts') ?></li>
+		<li> <?= $this->translate('This module waits for the Output of the Command/Script') ?></li>
+	</ul>
+</div>
+<div class="content">
+<?php /** @var \Icinga\Application\Config $action */ if ($actions->isEmpty()): ?>
+    <p><?= $this->translate('No Action has been added yet.') ?></p>
+<?php return; endif ?>
+    <table class="common-table table-row-selectable" data-base-target="_next">
+        <thead>
+            <tr>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Command/Script') ?></th>
+                <th><?= $this->translate('Filter') ?></th>
+                <th><?= $this->translate('Type') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($actions as $name => $action): /** @var object $role */ ?>
+            <tr>
+                <td>
+                    <?= $this->qlink(
+                        $name,
+                        'actions/config/update',
+                        array('action' => $name),
+                        array('title' => sprintf($this->translate('Update Action %s'), $name))
+                    ) ?>
+                </td>
+                <td><?= $this->escape($action->command) ?></td>
+                <td><?= $this->escape($action->filter) ?></td>
+                <td><?= $this->escape($action->type) ?></td>
+                <td class="icon-col text-right">
+                    <?= $this->qlink(
+                        '',
+                        'actions/config/remove',
+                        array('action' => $name),
+                        array(
+                            'class' => 'action-link',
+                            'icon'  => 'cancel',
+                            'title' => sprintf($this->translate('Remove Action %s'), $name)
+                        )
+                    ) ?>
+                </td>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    </table>
+</div>

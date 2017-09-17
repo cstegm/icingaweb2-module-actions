@@ -1,0 +1,4 @@
+Name: Actions
+Version: 1.1.10
+Depends: monitoring
+Description: Run Configured Actions from Icingaweb2
