@@ -3,20 +3,22 @@
 namespace Icinga\Module\Actions\Controllers;
 
 
-use Icinga\Exception\NotFoundError;
 use Icinga\Web\Controller;
-use Icinga\Web\Notification;
 use Icinga\Web\Navigation\Navigation;
+use Icinga\Application\Config;	
 
 class CommandController  extends Controller
 {
     public function indexAction()
     {
-		
-	    $this->view->action = $this->params->getRequired('action');
-	    $this->view->command = $this->params->getRequired('command');
-	    $this->view->pwd = shell_exec("pwd");
-	    $this->view->output .= shell_exec($this->view->command." 2>&1");
+	    $host = $this->params->getRequired('host');
+	    
+	    $action = $this->params->getRequired('action');
+            $config = Config::app('modules/actions/actions');
+	    $command = str_replace('$host_name$',$host,$config->get("ls","command"));
+	    $this->view->command = $command;
+	    $this->view->action = $action;
+	    $this->view->output .= shell_exec($command." 2>&1");
 	    $this->getTabs();
     }
     public function getTabs()

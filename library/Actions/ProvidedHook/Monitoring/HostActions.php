@@ -16,8 +16,7 @@ class HostActions extends HostActionsHook
 	$returnarray=array();
 	foreach($this->config as $action => $c){
 		if(preg_match("/".$c->filter."/",$host->getName()) && $c->type === "host"){
-			$command=str_replace('$host_name$',$host->getName(),$c->command);
-			$returnarray[$action] = "actions/command?action=$action&command=$command";
+			$returnarray[$action] = "actions/command?action=$action&host=".$host->getName();
 		}
 	}
 	return $returnarray;

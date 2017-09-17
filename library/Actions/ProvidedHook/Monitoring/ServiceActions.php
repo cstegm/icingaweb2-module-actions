@@ -18,8 +18,7 @@ class ServiceActions extends ServiceActionsHook
 	$returnarray=array();
 	foreach($this->config as $action => $c){
 		if(preg_match("/".$c->filter."/",$service->getName()) && $c->type==="service"){
-			$command=str_replace('$host_name$',$service->getHost()->getName(),$c->command);
-			$returnarray[$action] = "actions/command?action=$action&command=$command";
+			$returnarray[$action] = "actions/command?action=$action&host=".$service->getHost()->getName();
 		}
 	}
 	return $returnarray;
