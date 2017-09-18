@@ -13,11 +13,9 @@ class CommandController  extends Controller
     public function indexAction()
     {
         $auth = Auth::getInstance();
-
         if ($auth->hasPermission('actions/command')){
             $host = $this->params->getRequired('host');
-            $this->view->auth=1;
-
+            $this->view->authz=true;
             $action = $this->params->getRequired('action');
             $config = Config::app('modules/actions/actions');
             $command = str_replace('$host_name$',$host,$config->get($action,"command"));
@@ -26,7 +24,7 @@ class CommandController  extends Controller
             $this->view->output .= shell_exec($command." 2>&1");
             $this->getTabs();
         }else{
-            $this->view->auth=0;
+            $this->view->authz=false;
             $this->view->authmsg=$this->translate("You do not have the permission to execute actions.");
         }
 
