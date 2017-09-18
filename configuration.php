@@ -3,7 +3,7 @@
 use Icinga\Authentication\Auth;
 $auth = Auth::getInstance();
 
-$this->providePermission('action/conf', $this->translate('Allow to configure actions'));
+$this->providePermission('actions/conf', $this->translate('Allow to configure actions'));
 $this->providePermission('actions/command', $this->translate('Allow to execute actions'));
 
 $this->provideConfigTab('config', array(
