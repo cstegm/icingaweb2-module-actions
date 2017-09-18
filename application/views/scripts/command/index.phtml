@@ -1,8 +1,10 @@
 <div class="controls">
     <?= $tabs ?>
 </div>
-<?php if ($this->auth==1): ?>
 <div class="content">
+<?php if ($this->authz == false): ?>
+    <p><?= $this->translate('You do not have the permission to execute commands.') ?></p>
+<?php return; endif ?>
 <p>
     <h2><?= $this->translate('Executed Command:') ?></h2>
 </p>
@@ -12,8 +14,3 @@
 </p>
     <pre><?= $this->output ?></pre>
 </div>
-<?php return; endif ?>
-
-<?php if ($this->auth==0): ?>
-<?= $this->authmsg ?>
-<?php return; endif ?>
