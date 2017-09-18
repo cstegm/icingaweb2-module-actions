@@ -15,7 +15,7 @@ class CommandController  extends Controller
 	    
 	    $action = $this->params->getRequired('action');
             $config = Config::app('modules/actions/actions');
-	    $command = str_replace('$host_name$',$host,$config->get("ls","command"));
+	    $command = str_replace('$host_name$',$host,$config->get($action,"command"));
 	    $this->view->command = $command;
 	    $this->view->action = $action;
 	    $this->view->output .= shell_exec($command." 2>&1");
